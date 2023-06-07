@@ -1,0 +1,128 @@
+
+<div class="container border border-dark">
+    <div class="container-fluid" style="padding: 10px;">
+        <h2>Registration Form</h2>
+
+        <!-- <below line used to dispaly value inside the model> -->
+        <!-- {{registrationForm.value | json}} -->
+
+        <form [formGroup]="registrationForm" (ngSubmit)="onSubmit()">
+            <div class="form-group">
+                <label>Username</label>
+
+
+
+                <!-- <different way to show error> -->
+                <!-- <1st-way> -->
+                <!-- <error for specific reason> -->
+                <!-- <input [class.is-invalid]="registrationForm.get('userName').invalid && registrationForm.get('userName').touched"
+                type="text" id="userName" formControlName="userName" class="form-control"> -->
+                <!-- <small [class.d-none]="registrationForm.get('userName').valid || registrationForm.get('userName').untouched"
+                class="text-danger">Username is required</small> -->
+
+                <!-- <2nd way> -->
+                <!-- <multiple error for single form-control> -->
+                <!-- <div *ngIf="registrationForm.get('userName').invalid && registrationForm.get('userName').touched" >
+            <small class="text-danger" *ngIf="registrationForm.get('userName').errors?.required">Username Reuqired</small>
+            <small class="text-danger" *ngIf="registrationForm.get('userName').errors?.minlength">Username atleast 4 characters</small>
+        </div> -->
+
+
+                <!-- <3rd way> -->
+                <!-- <showing multiple error for single form-control using method creation called userName> -->
+                <input [class.is-invalid]="userName.invalid && userName.touched" type="text" id="userName"
+                    formControlName="userName" class="form-control">
+                <div *ngIf="userName.invalid && userName.touched">
+                    <small class="text-danger" *ngIf="userName.errors?.required">Username Reuqired</small>
+                    <small class="text-danger" *ngIf="userName.errors?.minlength">Username atleast 4 characters</small>
+                    <small class="text-danger" *ngIf="userName.errors?.maxlength">Username exceded 12 characters</small>
+                    <small class="text-danger"
+                        *ngIf="userName.errors?.forbiddenName">{{userName.errors?.forbiddenName.value}} Username Not
+                        Allowed</small>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- <div class="form-group">
+                <label>Email</label>
+                <button type="button" class="btn btn-secondary btn-sm m-2" (click)="addAlternateEmail()">Add e-mail</button>
+                <input [class.is-invalid]="email.invalid && email.touched" formControlName="email" type="email"
+                    class="form-control">
+                <small class="text-danger" [class.d-none]="email.valid || email.untouched">Email is required</small>
+            <div formArrayName="alternateEmails" *ngFor="let email of alternateEmails.controls" let i="index">
+                <input type="text" class="form-control my-1" [formControlName]="i">
+            </div>
+            </div> -->
+
+            <div class="form-group">
+                <label>Email</label>
+                <!-- <button type="button" class="btn btn-secondary btn-sm m-2" (click)="addAlternateEmail()">Add e-mail</button> -->
+                <input [class.is-invalid]="email.invalid && email.touched" formControlName="email" type="email"
+                    class="form-control">
+                <small class="text-danger" [class.d-none]="email.valid || email.untouched">Email is required</small>
+            </div>
+
+
+
+            <div class="form-check mb-3">
+                <input type="checkbox" formControlName="subscribe" class="form-check-input">
+                <label class="form-check-label">
+                    Send me promotional offers
+                </label>
+            </div>
+
+            <div class="form-group">
+                <label>Password</label>
+                <input
+                    [class.is-invalid]="registrationForm.get('password').invalid && registrationForm.get('password').touched"
+                    type="password" formControlName="password" class="form-control">
+                <!-- <small [class.d-none]="registrationForm.get('password').valid || registrationForm.get('password').untouched">Password is Required</small> -->
+                <div *ngIf="password.invalid && password.touched">
+                    <small class="text-danger" *ngIf="password.errors?.required">Password Reuqired</small>
+                    <small class="text-danger" *ngIf="password.errors?.minlength">Password atleast 8 characters</small>
+                    <small class="text-danger" *ngIf="password.errors?.passwordRequirements">
+                        Password must contain at least one symbol, one capital letter, and one number.
+                    </small>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>Re-Enter Password</label>
+                <input [class.is-invalid]="registrationForm.hasError('mismatch')" type="password"
+                    formControlName="confirmPassword" class="form-control">
+                <small class="text-danger" *ngIf="registrationForm.hasError('mismatch')">Passwords do not match</small>
+            </div>
+
+
+            <div formGroupName="address">
+                <div class="form-group">
+                    <label>City</label>
+                    <input formControlName="city" type="text" class="form-control">
+                </div>
+
+
+                <div class="form-group">
+                    <label>State</label>
+                    <input formControlName="state" type="text" class="form-control">
+                </div>
+
+
+                <div class="form-group">
+                    <label>Postal-Code</label>
+                    <input formControlName="postalcode" type="text" class="form-control">
+                </div>
+            </div>
+
+            <button [disabled]="!registrationForm.valid" class="btn btn-primary mt-3" type="submit">Register</button>
+            <!-- <button (click)="loadApiData()" class="btn btn-secondary mt-3" style="margin-left: 25px;" type="button">Load API Data</button> -->
+
+
+
+        </form>
+
+    </div>
+    
+</div>
